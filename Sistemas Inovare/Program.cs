@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Sistemas_Inovare.Models;
+
 namespace Sistemas_Inovare
 {
     public class Program
@@ -6,16 +9,21 @@ namespace Sistemas_Inovare
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Disponibiliza IConfiguration para Repositories
-            builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+
+            // Conexão com Banco de Dados
+            string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+            //builder.Services.AddDbContextPool<AppDbContext>(options =>
+                //options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
 
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 
+            // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -23,6 +31,7 @@ namespace Sistemas_Inovare
             app.UseStaticFiles();
 
             app.UseRouting();
+
             app.UseAuthorization();
 
             app.MapControllerRoute(

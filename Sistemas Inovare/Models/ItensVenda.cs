@@ -1,6 +1,6 @@
 namespace Sistemas_Inovare.Models
 {
-    public class VendaItem
+    public class ItensVenda
     {
         public int Id { get; set; }
         public int VendaId { get; set; }
